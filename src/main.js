@@ -24,14 +24,16 @@ async function handleSubmit(event) {
     searchImage = event.currentTarget.elements.searchImage.value;
 
     if (!searchImage) {
-                    iziToast.warning({
-                    title: 'Caution',
-                    titleColor: 'white',
-                    backgroundColor: '#EF4040',
-                    messageColor: '#FFFFFF',
-                    message: "You forgot to enter important data",
-                    position: 'topRight',
-                    });
+        loaderShow();  //new
+        // loader.style.display = "none"; //new
+        iziToast.warning({
+            title: 'Caution',
+            titleColor: 'white',
+            backgroundColor: '#EF4040',
+            messageColor: '#FFFFFF',
+            message: "You forgot to enter important data",
+            position: 'topRight',
+            });
         return;
     }
 
@@ -46,15 +48,16 @@ async function handleSubmit(event) {
         }
 
         if (data.hits.length === 0) {
-                iziToast.warning({
-                    title: 'Warning',
-                    titleColor: 'white',
-                    backgroundColor: '#EF4040',
-                    messageColor: '#FFFFFF',
-                    message: "Sorry, there are no images matching your search query. Please try again!",
-                    position: 'topRight',
-                });
-                return;
+            loadBtn.style.display = "none";
+            iziToast.warning({
+                title: 'Warning',
+                titleColor: 'white',
+                backgroundColor: '#EF4040',
+                messageColor: '#FFFFFF',
+                message: "Sorry, there are no images matching your search query. Please try again!",
+                position: 'topRight',
+            });
+            return;
         }   else {
                 createMarkup(data.hits);
                 loadBtn.style.display = "flex";
@@ -94,11 +97,11 @@ async function loadMore() {
         const data = await serviceSearchPhoto(searchImage, page, perPage);
         const totalHit = data.totalHits;
 
-        if (perPage * page >= totalHit) {
+        if (perPage * page >= totalHit) { 
             loadBtn.style.display = "none";
                     iziToast.warning({
                     title: 'Warning',
-                    titleColor: 'white',
+                    titleColor: 'black',
                     backgroundColor: '#FFFF00',
                     messageColor: '#000000',
                     message: "We're sorry, but you've reached the end of search results.",

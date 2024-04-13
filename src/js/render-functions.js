@@ -8,7 +8,6 @@ const list = document.querySelector(".js-list");
                 captionsData: 'alt',
                 captionPosition: 'bottom', 
             });
-// lightBox.refresh();
             
 export function createMarkup(arr) {
     const response = arr.map(({

@@ -101,7 +101,7 @@ async function loadMore() {
                     titleColor: 'white',
                     backgroundColor: '#FFFF00',
                     messageColor: '#000000',
-                    message: "SCROLL, there are no images matching your search query. Please try again!",
+                    message: "We're sorry, but you've reached the end of search results.",
                     position: 'topRight',
                 });   
         }

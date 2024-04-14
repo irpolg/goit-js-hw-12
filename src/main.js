@@ -8,7 +8,7 @@ const list = document.querySelector(".js-list");
 const loader = document.querySelector(".loader");
 const loadBtn = document.querySelector(".load-more");
 const input = document.querySelector(".search-input");
-let page = 1;
+let page = 1;   
 const perPage = 15;
 let searchImage = "";
     
@@ -22,10 +22,8 @@ async function handleSubmit(event) {
     list.innerHTML = ''; 
     loaderHidden();
     searchImage = event.currentTarget.elements.searchImage.value;
-
     if (!searchImage) {
-        loaderShow();  //new
-        // loader.style.display = "none"; //new
+        loaderShow();  
         iziToast.warning({
             title: 'Caution',
             titleColor: 'white',
@@ -44,7 +42,7 @@ async function handleSubmit(event) {
         const totalHit = data.totalHits;
 
         if (perPage * page >= totalHit) {
-            loadBtn.style.display = "none";
+            loadBtn.style.display = "none";            
         }
 
         if (data.hits.length === 0) {
@@ -57,9 +55,11 @@ async function handleSubmit(event) {
                 message: "Sorry, there are no images matching your search query. Please try again!",
                 position: 'topRight',
             });
+            loaderShow();           //14-04
+            searchForm.reset();     //14-04
             return;
-        }   else {
-                createMarkup(data.hits);
+        } else {
+            createMarkup(data.hits);
                 loadBtn.style.display = "flex";
                 loaderShow();
         }
@@ -91,7 +91,7 @@ function loaderHidden() {
 async function loadMore() {
     try {
         loadBtn.style.display = "flex";
-        if (loadMore) { 
+        if (loadBtn) {     //loadMore 14-04
             page += 1;
         }          
         const data = await serviceSearchPhoto(searchImage, page, perPage);
@@ -99,7 +99,8 @@ async function loadMore() {
 
         if (perPage * page >= totalHit) { 
             loadBtn.style.display = "none";
-                    iziToast.warning({
+            loaderShow();  //14-04
+            iziToast.warning({
                     title: 'Warning',
                     titleColor: 'black',
                     backgroundColor: '#FFFF00',
